@@ -7,12 +7,10 @@ Provide a description of the purpose of the module and any relevant information.
 Module to redirect transforms from cameras on the vision service to use GPU CUDA instead of CPU to improve processing speed and efficiency.
 
 <pre>
-├── gpu_transform_module.egg-info
-│   ├── dependency_links.txt
-│   ├── PKG-INFO
-│   ├── SOURCES.txt
-│   └── top_level.txt
-├── image_object.py
+├── Makefile
+├── module.tar.gz
+├── reload.sh
+├── run.sh
 ├── meta.json
 ├── README.md
 ├── requirements.txt
@@ -33,45 +31,153 @@ Module to redirect transforms from cameras on the vision service to use GPU CUDA
 Run tests through pytest with:
 <pre> pytest tests/ -v </pre>
 
-### Configuration
-The following attribute template can be used to configure this model:
 
-```json
-{
-"attribute_1": <float>,
-"attribute_2": <string>
-}
+---
+
+## Features
+
+- GPU-accelerated transforms: Uses CUDA to speed up image processing from camera feeds.
+- Modular pipeline: Easily extend or modify transform steps.
+- Test suite: Includes integration and unit tests for reliability.
+
+---
+
+## Installation
+
+> Note:  
+> The current `requirements.txt` does not yet support JetPack 6.  
+> Make sure your environment matches the dependencies listed in `requirements.txt`.
+
+```sh
+pip install -r requirements.txt
 ```
 
-#### Attributes
+---
 
-The following attributes are available for this model:
+## Usage
 
-| Name          | Type   | Inclusion | Description                |
-|---------------|--------|-----------|----------------------------|
-| `attribute_1` | float  | Required  | Description of attribute 1 |
-| `attribute_2` | string | Optional  | Description of attribute 2 |
+You can run the main pipeline or integrate the module into your own code.
 
-#### Example Configuration
+Example:
+```python
+from src.transform_pipeline import GPUTransformPipeline
 
-```json
-{
-  "attribute_1": 1.0,
-  "attribute_2": "foo"
-}
+config = [
+    {
+        "type": "resize",
+        "attributes": {
+            "width_px": 224,
+            "height_px": 224
+        }
+    },
+    {
+        "type": "normalize",
+        "attributes": {
+            "mean": [0.485, 0.456, 0.406],
+            "std": [0.229, 0.224, 0.225]
+        }
+    }
+]
+
+pipeline = GPUTransformPipeline(config)
 ```
 
-### DoCommand
+Or run scripts directly:
+```sh
+python src/main.py
+```
 
-If your model implements DoCommand, provide an example payload of each command that is supported and the arguments that can be used. If your model does not implement DoCommand, remove this section.
+---
 
-#### Example DoCommand
+## Running Tests
+
+Tests are located in `src/tests/`.  
+To run all tests:
+```sh
+pytest src/tests/ -v
+```
+
+---
+
+## Transform Pipeline Configuration
+
+The transform pipeline is configured with a list of transform steps. Each step is a dictionary with a `type` and an `attributes` dictionary.
+
+### Supported Transform Types and Attributes
+
+| Transform Type | Attribute Name(s)         | Type      | Required | Description                                      |
+|:--------------:|:-------------------------|:----------|:---------|:-------------------------------------------------|
+| resize         | width_px, height_px       | int       | Yes      | Output width and height in pixels                |
+| normalize      | mean, std                 | list      | Yes      | Mean and std lists for normalization             |
+| grayscale      | *(none)*                  |           | -        | Converts image to grayscale                      |
+| rotate         | angle_degs                | int/float | Yes      | Angle in degrees to rotate the image             |
+| crop           | x_min_px, y_min_px, x_max_px, y_max_px, overlay_crop_box | float, float, float, float, bool | Yes, Yes, Yes, Yes, No | Crop box coordinates and optional overlay flag    |
+
+### Example Configuration
 
 ```json
-{
-  "command_name": {
-    "arg1": "foo",
-    "arg2": 1
+[
+  {
+    "type": "resize",
+    "attributes": {
+      "width_px": 224,
+      "height_px": 224
+    }
+  },
+  {
+    "type": "normalize",
+    "attributes": {
+      "mean": [0.485, 0.456, 0.406],
+      "std": [0.229, 0.224, 0.225]
+    }
+  },
+  {
+    "type": "rotate",
+    "attributes": {
+      "angle_degs": 90
+    }
+  },
+  {
+    "type": "crop",
+    "attributes": {
+      "x_min_px": 10.0,
+      "y_min_px": 20.0,
+      "x_max_px": 200.0,
+      "y_max_px": 220.0,
+      "overlay_crop_box": false
+    }
+  },
+  {
+    "type": "grayscale",
+    "attributes": {}
+  },
+  {
+    "type": "to_tensor",
+    "attributes": {}
   }
-}
+]
 ```
+
+---
+## Makefile Commands
+
+You can use the provided Makefile to build and clean the module:
+
+| Command             | Description                                                        |
+|---------------------|--------------------------------------------------------------------|
+| `make module`       | Builds the module and creates `module.tar.gz` for deployment.      |
+| `make clean_module` | Removes build artifacts, including `module.tar.gz`.                |
+
+**Example usage:**
+```sh
+make module        # Build the module
+make clean_module  
+```
+```
+
+## Notes
+
+- CUDA and compatible GPU required for acceleration.
+- For JetPack 6 support, dependencies may need to be updated in `requirements.txt`.
+
+---
