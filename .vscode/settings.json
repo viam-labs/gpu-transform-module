@@ -1,0 +1,11 @@
+{
+    "python.analysis.autoImportCompletions": true,
+    "cursorpyright.analysis.autoImportCompletions": true,
+    "python.analysis.nodeExecutable": "/opt/homebrew/bin/node",
+    "basedpyright.analysis.nodeExecutable": "/opt/homebrew/bin/node",
+    "python.testing.pytestArgs": [
+        "gpu-transform-camera"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}
