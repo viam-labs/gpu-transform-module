@@ -33,3 +33,5 @@ clean_module:
 	rm -rf dist
 	rm -rf build
 	rm -rf *.spec
+
+# tests on torch that runs with orin gpu 

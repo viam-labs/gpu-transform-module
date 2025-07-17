@@ -74,18 +74,20 @@ class GPUTransformCamera(Camera, Reconfigurable):
         *,
         extra: Optional[Dict[str, Any]] = None,
         timeout: Optional[float] = None,
-        **kwargs,
+        metadata: Optional[Dict[str, Any]] = None,
     ) -> ViamImage:
         if self.source_camera is None:
             raise RuntimeError("Source camera not configured")
         if self.pipeline is None:
             raise RuntimeError("Transform pipeline not configured")
 
-        source_image = await self.source_camera.get_image(
-            mime_type, timeout=timeout, **kwargs
-        )
+        source_image = await self.source_camera.get_image(mime_type, timeout=timeout)
 
-        return self.pipeline.transform(source_image)
+        transformed_image = self.pipeline.transform(
+            source_image
+        )  # add mime type to avoid always using jpeg
+        logger.info(f"Returning transformed image: {type(transformed_image)}")
+        return transformed_image
 
     async def get_images(
         self, *, timeout: Optional[float] = None

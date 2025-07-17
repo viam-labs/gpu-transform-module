@@ -132,10 +132,6 @@ class GPUTransformPipeline:
             transform_list
         )  # compose transforms into a single pipeline
 
-        # Optionally JIT script the pipeline for optimization
-        # if transform_config["jit_script"]: #just in time for optimized execution #not typically part of a viam config
-        #     transform_pipeline = torch.jit.script(transform_pipeline)
-
         return transform_pipeline
 
     def transform(self, image: ViamImage) -> ViamImage:
