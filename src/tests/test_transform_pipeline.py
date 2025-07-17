@@ -16,6 +16,7 @@ from viam.media.video import CameraMimeType
 import matplotlib.pyplot as plt
 
 
+# unit tests
 @pytest.fixture
 def sample_image():
     """Creates a sample image object for testing."""

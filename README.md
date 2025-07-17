@@ -1,7 +1,5 @@
 # Module gpu-transform-camera 
 
-Provide a description of the purpose of the module and any relevant information.
-
 ## Model isha-org:gpu-transform-camera:gpu-transform
 
 Module to redirect transforms from cameras on the vision service to use GPU CUDA instead of CPU to improve processing speed and efficiency.

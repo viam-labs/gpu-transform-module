@@ -8,7 +8,7 @@ from viam.services.vision import Vision
 from src.models.gpu_transform import GPUTransformCamera
 from fake_camera import FakeCamera
 
-
+# to test without viam server camera
 CAMERA_NAME = "fake-camera"
 
 PASSING_PROPERTIES = Vision.Properties(

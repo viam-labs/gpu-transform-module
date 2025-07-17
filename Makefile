@@ -34,4 +34,4 @@ clean_module:
 	rm -rf build
 	rm -rf *.spec
 
-# tests on torch that runs with orin gpu 
+# does not have target for torch that runs with orin gpu yet

@@ -9,7 +9,7 @@ from viam.logging import getLogger
 logger = getLogger(__name__)
 
 
-# creating classes to use functional transform as align with current transform registry on viam
+# classes to use functional transform as align with current transform registry on viam
 class FunctionalCrop(torch.nn.Module):
     def __init__(
         self, x_min_px, y_min_px, x_max_px, y_max_px, overlay_crop_box=False

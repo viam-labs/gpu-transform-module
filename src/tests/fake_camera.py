@@ -23,6 +23,7 @@ def load_ordered_images(path: str) -> Sequence[Image.Image]:
     return images
 
 
+# for testing purposes
 class FakeCamera(Camera):
     def __init__(self, name: str, img_path: str, use_ring_buffer: bool = False):
         """
