@@ -25,7 +25,7 @@ WORKING_CONFIG_DICT = {
 }  # can test with multiple transforms
 
 
-IMG_PATH = "/Users/isha.yerramilli-rao/gpu-transform-module/gpu-transform-camera/src/tests/test_images"
+IMG_PATH = "/Users/isha.yerramilli-rao/gpu-transform-module/src/tests/test_images"
 
 
 def get_config(config_dict: Dict, name: str) -> ComponentConfig:

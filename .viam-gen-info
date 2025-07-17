@@ -1,5 +1,5 @@
 {
-  "module_name": "gpu-transform-camera",
+  "module_name": "gpu-transform-module",
   "namespace": "isha-org",
   "language": "python",
   "resource_type": "component",
