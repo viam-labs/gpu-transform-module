@@ -26,6 +26,7 @@ from google.protobuf.json_format import MessageToDict
 logger = getLogger(__name__)
 
 
+# GPU transform camera class
 class GPUTransformCamera(Camera, Reconfigurable):
     MODEL: ClassVar[Model] = Model(ModelFamily("viam", "camera"), "gpu-transform")
 

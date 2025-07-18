@@ -8,7 +8,7 @@ from viam.services.vision import Vision
 from src.models.gpu_transform import GPUTransformCamera
 from fake_camera import FakeCamera
 
-
+# to test without viam server camera
 CAMERA_NAME = "fake-camera"
 
 PASSING_PROPERTIES = Vision.Properties(
@@ -25,7 +25,7 @@ WORKING_CONFIG_DICT = {
 }  # can test with multiple transforms
 
 
-IMG_PATH = "/Users/isha.yerramilli-rao/gpu-transform-module/gpu-transform-camera/src/tests/test_images"
+IMG_PATH = "/Users/isha.yerramilli-rao/gpu-transform-module/src/tests/test_images"
 
 
 def get_config(config_dict: Dict, name: str) -> ComponentConfig:
